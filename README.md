@@ -1,4 +1,4 @@
-# Educación Pública — Asistencia — Frontend - TEST 1
+# Educación Pública — Asistencia — Frontend - TEST 1 con RERUN
 
 > Registro de asistencia escolar diaria y resúmenes para apoderados.
 
