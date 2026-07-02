@@ -7,6 +7,7 @@ interface Item {
 
 export function ListPage({ onLogout }: { onLogout: () => void }) {
   const [items, setItems] = useState<Item[]>([]);
+  const [x, setX] = useState("");
 
   useEffect(() => {
     // Demo data. Wire to GET /educacion-asistencia on the backend template.
@@ -30,10 +31,22 @@ export function ListPage({ onLogout }: { onLogout: () => void }) {
           Salir
         </button>
       </header>
+      <input
+        type="text"
+        value={x}
+        placeholder="Buscar..."
+        style={{ marginTop: "10px", padding: "4px" }}
+        onChange={(e: any) => {
+          console.log(x);
+          setX(e.target.value);
+        }}
+      />
       <ul>
-        {items.map((it) => (
-          <li key={it.id}>{it.label}</li>
-        ))}
+        {items
+          .filter((i) => i.label.toLowerCase().indexOf(x.toLowerCase()) > -1)
+          .map((it) => (
+            <li key={it.id}>{it.label}</li>
+          ))}
       </ul>
     </main>
   );
