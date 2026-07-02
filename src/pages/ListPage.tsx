@@ -1,20 +1,35 @@
-import { useEffect, useState } from "react";
-
-interface Item {
-  id: number;
-  label: string;
-}
+import { useStudents } from "@/hooks/useStudents";
+import { api } from "@/lib/api";
+import { buildAttendancePayload } from "@/lib/attendance";
+import { useState } from "react";
 
 export function ListPage({ onLogout }: { onLogout: () => void }) {
-  const [items, setItems] = useState<Item[]>([]);
+  const { data: students, loading, error } = useStudents();
+  const [attendance, setAttendance] = useState<Record<number, boolean>>({});
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
-  useEffect(() => {
-    // Demo data. Wire to GET /educacion-asistencia on the backend template.
-    setItems([
-      { id: 1, label: "Registro de ejemplo 1" },
-      { id: 2, label: "Registro de ejemplo 2" },
-    ]);
-  }, []);
+  function togglePresent(studentId: number, present: boolean) {
+    setAttendance((prev) => ({ ...prev, [studentId]: present }));
+  }
+
+  async function handleSave() {
+    setSaving(true);
+    setSaveError(null);
+    try {
+      const payload = buildAttendancePayload(attendance);
+      await api("/attendance", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      setSaveError(
+        err instanceof Error ? err.message : "No se pudo guardar la asistencia",
+      );
+    } finally {
+      setSaving(false);
+    }
+  }
 
   return (
     <main style={{ maxWidth: 640, margin: "2rem auto", padding: "0 1rem" }}>
@@ -30,11 +45,34 @@ export function ListPage({ onLogout }: { onLogout: () => void }) {
           Salir
         </button>
       </header>
-      <ul>
-        {items.map((it) => (
-          <li key={it.id}>{it.label}</li>
-        ))}
-      </ul>
+
+      {loading && <p>Cargando...</p>}
+      {error && <p role="alert">{error}</p>}
+      {saveError && <p role="alert">{saveError}</p>}
+
+      {!loading && !error && (
+        <>
+          <ul>
+            {students.map((student) => (
+              <li key={student.id}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={attendance[student.id] ?? false}
+                    onChange={(e) =>
+                      togglePresent(student.id, e.target.checked)
+                    }
+                  />
+                  {student.fullName} ({student.grade})
+                </label>
+              </li>
+            ))}
+          </ul>
+          <button type="button" onClick={handleSave} disabled={saving}>
+            {saving ? "Guardando..." : "Guardar asistencia"}
+          </button>
+        </>
+      )}
     </main>
   );
 }
