@@ -1,3 +1,4 @@
+import { getAppVersionLabel } from "@/lib/version";
 import { useEffect, useState } from "react";
 
 interface Item {
@@ -35,6 +36,7 @@ export function ListPage({ onLogout }: { onLogout: () => void }) {
           <li key={it.id}>{it.label}</li>
         ))}
       </ul>
+      <footer>{getAppVersionLabel()}</footer>
     </main>
   );
 }
