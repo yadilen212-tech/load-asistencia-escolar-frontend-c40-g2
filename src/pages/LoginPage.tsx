@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import { api } from "@/lib/api";
+import { cn } from "@/lib/utils";
 import { type FormEvent, useState } from "react";
 
 interface AuthResponse {
@@ -33,7 +33,7 @@ export function LoginPage({ onLogin }: { onLogin: () => void }) {
       setError(
         err instanceof Error
           ? err.message
-          : "Error al iniciar sesión. Intenta de nuevo."
+          : "Error al iniciar sesión. Intenta de nuevo.",
       );
     } finally {
       setLoading(false);
