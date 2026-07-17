@@ -1,13 +1,14 @@
-import * as React from "react"
-import { Alert, type AlertProps } from "../ui/alert"
+import * as React from "react";
+import { Alert, type AlertProps } from "../ui/alert";
 
-export type NotificationType = "info" | "success" | "warning" | "error"
+export type NotificationType = "info" | "success" | "warning" | "error";
 
-export interface AlertNotificationProps extends Omit<AlertProps, "variant"> {
-  type?: NotificationType
-  autoClose?: boolean
-  autoCloseDuration?: number
-  id?: string
+export interface AlertNotificationProps
+  extends Omit<AlertProps, "variant"> {
+  type?: NotificationType;
+  autoClose?: boolean;
+  autoCloseDuration?: number;
+  id?: string;
 }
 
 const typeToVariant = (type: NotificationType): AlertProps["variant"] => {
@@ -16,11 +17,14 @@ const typeToVariant = (type: NotificationType): AlertProps["variant"] => {
     success: "success",
     warning: "warning",
     error: "destructive",
-  }
-  return mapping[type]
-}
+  };
+  return mapping[type];
+};
 
-const AlertNotification = React.forwardRef<HTMLDivElement, AlertNotificationProps>(
+const AlertNotification = React.forwardRef<
+  HTMLDivElement,
+  AlertNotificationProps
+>(
   (
     {
       type = "info",
@@ -34,20 +38,20 @@ const AlertNotification = React.forwardRef<HTMLDivElement, AlertNotificationProp
     },
     ref,
   ) => {
-    const [isVisible, setIsVisible] = React.useState(true)
+    const [isVisible, setIsVisible] = React.useState(true);
 
     React.useEffect(() => {
       if (autoClose && isVisible) {
         const timer = setTimeout(() => {
-          setIsVisible(false)
-          onClose?.()
-        }, autoCloseDuration)
+          setIsVisible(false);
+          onClose?.();
+        }, autoCloseDuration);
 
-        return () => clearTimeout(timer)
+        return () => clearTimeout(timer);
       }
-    }, [autoClose, autoCloseDuration, isVisible, onClose])
+    }, [autoClose, autoCloseDuration, isVisible, onClose]);
 
-    if (!isVisible) return null
+    if (!isVisible) return null;
 
     return (
       <Alert
@@ -56,16 +60,16 @@ const AlertNotification = React.forwardRef<HTMLDivElement, AlertNotificationProp
         title={title}
         description={description}
         onClose={() => {
-          setIsVisible(false)
-          onClose?.()
+          setIsVisible(false);
+          onClose?.();
         }}
         showCloseButton={showCloseButton}
         {...props}
       />
-    )
+    );
   },
-)
+);
 
-AlertNotification.displayName = "AlertNotification"
+AlertNotification.displayName = "AlertNotification";
 
-export { AlertNotification }
+export { AlertNotification };

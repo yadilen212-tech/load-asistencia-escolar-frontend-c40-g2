@@ -1,5 +1,5 @@
 // UI Components
-export { Button, buttonVariants, type ButtonProps } from "./ui/button"
+export { Button, buttonVariants, type ButtonProps } from "./ui/button";
 export {
   Card,
   CardHeader,
@@ -7,9 +7,13 @@ export {
   CardTitle,
   CardDescription,
   CardContent,
-} from "./ui/card"
-export { Input, type InputProps } from "./ui/input"
-export { Alert, alertVariants, type AlertProps } from "./ui/alert"
+} from "./ui/card";
+export { Input, type InputProps } from "./ui/input";
+export { Alert, alertVariants, type AlertProps } from "./ui/alert";
 
 // Composite Components
-export { AlertNotification, type AlertNotificationProps, type NotificationType } from "./Alert"
+export {
+  AlertNotification,
+  type AlertNotificationProps,
+  type NotificationType,
+} from "./Alert";
