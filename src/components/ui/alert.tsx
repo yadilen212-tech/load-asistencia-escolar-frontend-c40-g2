@@ -56,9 +56,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
               </h3>
             )}
             {description && (
-              <p className={`text-sm ${title ? "mt-2" : ""}`}>
-                {description}
-              </p>
+              <p className={`text-sm ${title ? "mt-2" : ""}`}>{description}</p>
             )}
           </div>
           {showCloseButton && (

@@ -3,8 +3,7 @@ import { Alert, type AlertProps } from "../ui/alert";
 
 export type NotificationType = "info" | "success" | "warning" | "error";
 
-export interface AlertNotificationProps
-  extends Omit<AlertProps, "variant"> {
+export interface AlertNotificationProps extends Omit<AlertProps, "variant"> {
   type?: NotificationType;
   autoClose?: boolean;
   autoCloseDuration?: number;
