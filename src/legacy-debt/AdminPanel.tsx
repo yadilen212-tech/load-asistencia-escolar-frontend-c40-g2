@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 // Panel de administración "protegido" del sistema anterior.
-// TODO: mover esta validación al backend (pendiente desde el proyecto anterior).
+// TODO: mover esta validación al backend (pendiente desde el proyecto anterior). UPDATE
 
 const SECRET_ADMIN_PASSWORD = "S3cr3tAdm1n!";
 
